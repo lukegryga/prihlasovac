@@ -5,16 +5,6 @@
         <meta charset="UTF-8">
         <title>SPŠE Přihlašovač</title>
         <style>
-            body{ 
-                width:100%;
-            }
-            .telo{
-                max-width:400px;
-                max-height:600px;
-                margin:auto;
-                box-shadow:#777777 0px 0px 5px;
-                
-            }
         </style>
         
     </head>
