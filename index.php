@@ -5,11 +5,19 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="style.css" type="text/css">
         <meta charset="UTF-8">
-        <title>SPŠE Přihlašovač</title>
+        <link href="whale.png" rel="icon" type="image/png" />
+        <title>SPŠE FTP Přihlašovač</title>
         
         
     </head>
     <body>
+        <?php 
+            include("phpKnihovna.php");
+            if(isset($_POST['prihlasit'])){
+                $errorMessage = vsechno_funkce();
+                echo $errorMessage;
+            }
+        ?>
         <?php
             date_default_timezone_set("Europe/Prague");
             $intCas = intval(date("Hi"))+10;
@@ -27,12 +35,12 @@
         
         
         <div class="karta" id="stred">
-            <form action="ftp.php" method="post">
+            <form action="index.php" method="post">
                 <input type="text" autofocus placeholder="Jméno" class="inputvkarte" pattern="[a-zěščřžýáíéóďťúů]{1,12}" title="Jen malá písmena s maximální délkou 12 znaků." name="jmeno" required>
-                <input type="text" placeholder="Počítač" class="inputvkarte" pattern="[1-9]{1,2}" title="Jen čísla s délkou 2 znaků." name="pocitac" required><br>
+                <input type="text" placeholder="Počítač" class="inputvkarte" pattern="[0-9]{1,2}" title="Jen čísla s délkou 2 znaků." name="pocitac" required><br>
                 <input type="text" placeholder="Učitel" class="inputvkarte" pattern="[a-z]{1,12}" title="Jen malá písmena s maximální délkou 12 znaků a bez diakritiky." name="ucitel" required>
-                <input type="text" placeholder="Hodina" value=<?php echo ($hodina) ?> class="inputvkarte" pattern="[1-9]{1,2}" title="Jen čísla s délkou 2 znaků." name="hodina" required><br>
-                <input type="submit" class="submitvkarte" value="Přihlásit">
+                <input type="text" placeholder="Hodina" value=<?php echo ($hodina) ?> class="inputvkarte" pattern="[0-9]{1,2}" title="Jen čísla s délkou 2 znaků." name="hodina" required><br>
+                <input type="submit" class="submitvkarte" name="prihlasit" value="Přihlásit">
             </form>
         </div>
         <?php
