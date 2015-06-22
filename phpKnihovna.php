@@ -46,11 +46,12 @@
         $pocitac = filter_input(INPUT_POST,"pocitac");
         $ucitel = substr(filter_input(INPUT_POST,"ucitel"),0,3);
         $hodina = filter_input(INPUT_POST,"hodina");
-        $ucebna = filter_input(INPUT_POST,"ucebna");
-        $trida = filter_input(INPUT_POST,"trida");
-
-        $datum = date("md");
-        $slozka = "q".$datum.$ucebna."h".$hodina."_".$trida;
+        
+        $soubory = scandir("/home/".$ucitel);
+        foreach($soubory as $s){
+            echo($s);
+        }
+        
         $fileName = $pocitac.$jmeno.".txt";
         $file = fopen($fileName, "w");
 
@@ -65,7 +66,7 @@
                if(!$istrue){
                     return "Nepodařilo se přenest přihlašovaci soubor";
                }
-               show_card("Přihlášení proběhlo úspěšně");
+               show_card("Přihlášení proběhlo úspěšně"); 
            }else{
                show_card("Nepodařilo se změnit složku na:<br>");
                show_card("../".$ucitel."/".$slozka."<br>");
