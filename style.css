@@ -244,3 +244,7 @@ body{
     border-bottom: 0px solid black;
     font-family: monospace;
 }
+
+#error {
+    margin: 2em;
+}

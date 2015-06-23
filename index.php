@@ -14,7 +14,9 @@
             include("phpKnihovna.php");
             if(isset($_POST['prihlasit'])){
                 $errorMessage = vsechno_funkce();
-                echo $errorMessage;
+                echo "<div class=\"karta\" id=\"stred\">";    
+                echo "<a id=\"error\"> $errorMessage</a>"; 
+                echo "</div>";
             }
             $hodina = getHodina();
         ?>
@@ -22,9 +24,9 @@
         <div class="karta" id="stred">
             <form action="index.php" method="post">
                 <input type="text" autofocus placeholder="Jméno" class="inputvkarte" pattern="[a-zěščřžýáíéóďťúů]{1,12}" title="Jen malá písmena s maximální délkou 12 znaků." name="jmeno" required>
-                <input type="text" placeholder="Počítač" class="inputvkarte" pattern="[0-9]{1,2}" title="Jen čísla s délkou 2 znaků." name="pocitac" required value=<?php getCisloPc(get_client_ip()) ?>><br>
+                <input type="text" placeholder="Počítač" class="inputvkarte" pattern="[0-9]{1,2}" title="Jen čísla s délkou 2 znaků." name="pocitac" required value="<?php echo getCisloPc(get_client_ip()) ?>" ><br>
                 <input type="text" placeholder="Učitel" class="inputvkarte" pattern="[a-z]{1,12}" title="Jen malá písmena s maximální délkou 12 znaků a bez diakritiky." name="ucitel" required>
-                <input type="text" placeholder="Hodina" value=<?php echo ($hodina) ?> class="inputvkarte" pattern="[0-9]{1,2}" title="Jen čísla s délkou 2 znaků." name="hodina" required><br>
+                <input type="text" placeholder="Hodina" value=<?php echo ($hodina) ?> class="inputvkarte" pattern="[0-9]{1}" title="Jen čísla s délkou 2 znaků." name="hodina" required><br>
                 <input type="text" placeholder="Report" class="inputvkarte" name="report"><br>
                 <input type="submit" class="submitvkarte" name="prihlasit" value="Přihlásit">
             </form>
