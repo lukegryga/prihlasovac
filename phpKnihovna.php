@@ -40,6 +40,46 @@
         }
         return $hodina;
     }
+    /**
+     * 
+     * @param string $ip - ip na které chceme zjístit číslo počítače.
+     * @return string - vrací číslo počítače. Pokud není nalezeno, vrátí prázdný řetězec
+     */
+    function getCisloPc($ip){
+        $link = linkToMyDb();
+        if(!$link){
+            return;
+        }
+        $result = mysqli_query($link,"SELECT pc FROM ippc WHERE ip = $ip;");
+        if($row = mysqli_fetch_array($result)){
+            return $row[0];
+        }else{
+            return "";
+        }
+    }
+    
+    /**
+     * Aktualizuje záznam čísla počítače dané ip;
+     * @param int $pc - číslo počítače
+     */
+    function ulozIPPC($pc){
+        $link = linkToMyDb();
+        if(!$link){
+            return;
+        }
+        $ip = get_client_ip();
+        mysqli_query($link,"DELETE FROM ippc WHERE ip = $ip;");
+        mysqli_query($link,"INSERT INTO ippc VALUES ('$ip', $pc);");
+    }
+    
+    /**
+     * 
+     * @return mysqli_link mysqli_link - připojení k dané databázi.
+     */
+    function linkToMyDb(){
+        $link = mysqli_connect("localhost", "3c30", "3c30", "db_3c30");
+        return $link;
+    }
     
     function vsechno_funkce() {
         date_default_timezone_set("Europe/Prague");
@@ -54,11 +94,13 @@
         $soubory = scandir("/home/".$ucitel);
         $slozka = "";
         foreach($soubory as $s){
-            //if(!substr_compare($s,"q".date("md"),0) && !substr_compare($s,"h".$hodina,0)){
-            if(strpos($s,"q0617") !== false && strpos($s,"h3") !== false){
+            if(strpos($s,"q".date("md")) !== false && strpos($s,"h".$hodina) !== false){
                 $slozka=$s; 
                 break;
             }
+        }
+        if($slozka === ""){
+            return "Složka pro kopírování nenalezena, zkokntrolujte hodinu a jménu učitele";
         }
         
         //vytvoření přihlašovacího soubou
@@ -74,13 +116,7 @@
         //nahrání souboru
         if(!copy($dir.$fileName, "/home/".$ucitel."/".$slozka."/".$fileName)){
             return "Nepodařilo se zkopírovat soubor";
-        }
-
-        $link = mysqli_connect("localhost", "3c30", "3c30", "db_3c30");
-        if(!$link){
-            return "Nepodařilo se připojit k databázi.";
-        }
-        $ip = get_client_ip();
+        }       
     }
 
 
