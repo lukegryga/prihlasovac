@@ -48,11 +48,11 @@
     function getCisloPc($ip){
         $link = linkToMyDb();
         if(!$link){
-            return;
+            return "";
         }
-        $result = mysqli_query($link,"SELECT pc FROM ippc WHERE ip = $ip;");
-        if($row = mysqli_fetch_array($result)){
-            return $row[0];
+        $result = mysqli_query($link,"SELECT * FROM ippc WHERE ip like '$ip'");
+        if(($row = mysqli_fetch_array($result))){
+            return $row[1];
         }else{
             return "";
         }
@@ -68,8 +68,31 @@
             return;
         }
         $ip = get_client_ip();
-        mysqli_query($link,"DELETE FROM ippc WHERE ip = $ip;");
-        mysqli_query($link,"INSERT INTO ippc VALUES ('$ip', $pc);");
+        mysqli_query($link,"DELETE FROM ippc WHERE ip = $ip");
+        mysqli_query($link,"INSERT INTO ippc VALUES ('$ip', $pc)");
+    }
+    
+    /**
+     * Pokud konkretni záznam není v databází přidá nový, pokud je, tak zvýší prioritu o 1;
+     * @param string $ucitel 
+     * @param string $jmeno
+     * @param int $hodina
+     */
+    
+    function aktualizujRozvrh($ucitel, $jmeno, $hodina){
+        $DEFAULTDATE = strtotime("2015-9-1");
+        $link = linkToMyDb();
+        if(!$link){
+            return;
+        } 
+        $ip = get_client_ip();
+        $den = ($DEFAULTDATE - time())%14;
+        $resutl = mysqli_query("SELECT * FROM rozvrh WHERE den = $den and hodina = $hodina and ip like'$ip' and ucitel like'$ucitel' and jmeno like'$jmeno'");
+        if(!($row = mysqli_fetch_array($resutl))){
+            mysqli_query($link,"INSERT INTO rozvrh VALUES(0, $den, '$ip', '$ucitel', 1, '$jmeno', $hodina)");
+        }else{
+            mysqli_query($link,"UPDATE rozvrh SET priorita = priorita+1 WHERE id = $row[0]");
+        }
     }
     
     /**
@@ -77,7 +100,7 @@
      * @return mysqli_link mysqli_link - připojení k dané databázi.
      */
     function linkToMyDb(){
-        $link = mysqli_connect("localhost", "3c30", "3c30", "db_3c30");
+        $link = mysqli_connect("localhost", "3c30", "3c30", "db_3c30") or die("chyba");
         return $link;
     }
     
@@ -94,7 +117,8 @@
         $soubory = scandir("/home/".$ucitel);
         $slozka = "";
         foreach($soubory as $s){
-            if(strpos($s,"q".date("md")) !== false && strpos($s,"h".$hodina) !== false){
+            //if(strpos($s,"q".date("md")) !== false && strpos($s,"h".$hodina) !== false){
+            if(strpos($s,"q0617") !== false && strpos($s,"h".$hodina) !== false){
                 $slozka=$s; 
                 break;
             }
@@ -116,7 +140,9 @@
         //nahrání souboru
         if(!copy($dir.$fileName, "/home/".$ucitel."/".$slozka."/".$fileName)){
             return "Nepodařilo se zkopírovat soubor";
-        }       
+        }
+        ulozIPPC($pocitac);
+        aktualizujRozvrh($ucitel, $jmeno, $hodina);
     }
 
 
