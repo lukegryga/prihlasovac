@@ -65,7 +65,10 @@
      * @param type $hodina
      * @return string 
      */
-    function getUcitel($ip, $den, $hodina){
+    function getUcitel(){
+        $ip = get_client_ip();
+        $den = getDay();
+        $hodina = getHodina();
         $link = linkToMyDb();
         if(!$link){
             return "";
@@ -91,8 +94,12 @@
      * @param type $hodina
      * @return string
      */
-    function getJmeno($ip, $den, $hodina){
+    function getJmeno(){
+        $ip = get_client_ip();
+        $den = getDay();
+        $hodina = getHodina();
         $link = linkToMyDb();
+        
         if(!$link){
             return "";
         }
@@ -114,7 +121,6 @@
      * Vráti mysql_query s učilely (zkratka, přijmení)
      */
     function getSeznamUcitelu(){
-        $seznamUcitelu = Array(Array());
         $link = linkToMyDb();
         
         return mysqli_query($link,"SELECT * FROM ucitele");  
@@ -142,13 +148,12 @@
      */
     
     function aktualizujRozvrh($ucitel, $jmeno, $hodina){
-        $DEFAULTDATE = strtotime("2015-9-1");
         $link = linkToMyDb();
         if(!$link){
             return;
         } 
         $ip = get_client_ip();
-        $den = ($DEFAULTDATE - time())%14;
+        $den = getDay();
         $resutl = mysqli_query("SELECT * FROM rozvrh WHERE den = $den and hodina = $hodina and ip like'$ip' and ucitel like'$ucitel'");
         if(!($row = mysqli_fetch_array($resutl))){
             mysqli_query($link,"INSERT INTO rozvrh VALUES(0, $den, '$ip', '$ucitel', 1, '$jmeno', $hodina)");
@@ -164,6 +169,16 @@
     function linkToMyDb(){
         $link = mysqli_connect("localhost", "3c30", "3c30", "db_3c30") or die("chyba");
         return $link;
+    }
+    
+    /**
+     * 
+     * @return int vrátí číslo 1-14 (den od 1.9.2015)
+     */
+    function getDay(){
+        $DEFAULTDATE = strtotime("2015-9-1");
+        return ($DEFAULTDATE - time())%14;
+        
     }
     
     function vsechno_funkce() {
