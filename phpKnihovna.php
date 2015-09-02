@@ -57,6 +57,57 @@
             return "";
         }
     }
+    /**
+     * Zjístí nejvíce pravděpodobného učitele, vyskytující se v učebně v daný den v dané hodině.
+     * @param type $ip 
+     * @param type $den den ve formátu 14
+     * @param type $hodina
+     * @return string 
+     */
+    function getUcitel($ip, $den, $hodina){
+        $link = linkToMyDb();
+        if(!$link){
+            return "";
+        }
+        $result = mysqli_query($link,"SELECT * FROM rozvrh WHERE ip like '$ip' and den=$den and hodina=$hodina");
+        $pzaznam = null;
+        if(!($pzaznam = mysqli_fetch_array($result))){
+                return "";
+        }
+        while($row = mysqli_fetch_array($result)){
+            if($row[4] > $pzaznam[4]){
+                $pzaznam = $row;
+            }
+        }
+        
+        return $pzaznam[3];
+    }
+    
+    /**
+     * 
+     * @param type $ip
+     * @param type $den
+     * @param type $hodina
+     * @return string
+     */
+    function getJmeno($ip, $den, $hodina){
+        $link = linkToMyDb();
+        if(!$link){
+            return "";
+        }
+        $result = mysqli_query($link,"SELECT * FROM rozvrh WHERE ip like '$ip' and den=$den and hodina=$hodina");
+        $pzaznam = null;
+        if(!($pzaznam = mysqli_fetch_array($result))){
+                return "";
+        }
+        while($row = mysqli_fetch_array($result)){
+            if($row[4] > $pzaznam[4]){
+                $pzaznam = $row;
+            }
+        }
+        
+        return $pzaznam[5];
+    }
     
     /**
      * Aktualizuje záznam čísla počítače dané ip;
