@@ -58,7 +58,7 @@
         }
     }
     /**
-     * Zjístí nejvíce pravděpodobného učitele, vyskytující se v učebně v daný den v dané hodině.
+     * Vybere učitele (zkratku) na základě dnu v dvou týdnech, ip adresy, a aktuální hodiny
      * @param type $ip 
      * @param type $den den ve formátu 14
      * @param type $hodina
@@ -84,7 +84,7 @@
     }
     
     /**
-     * 
+     * Vybere jméno na základě dnu v dvou týdnech, ip adresy, a aktuální hodiny
      * @param type $ip
      * @param type $den
      * @param type $hodina
@@ -101,12 +101,25 @@
                 return "";
         }
         while($row = mysqli_fetch_array($result)){
+            //Pokud je priorita vyšší tak ulož do pzaznam
             if($row[4] > $pzaznam[4]){
                 $pzaznam = $row;
             }
         }
         
         return $pzaznam[5];
+    }
+    /**
+     * Vráti dvojrozměrné pole se senamemu učitelů. Index 0 = zkratka index 1 = Příjmení
+     */
+    function getSeznamUcitelu(){
+        $seznamUcitelu = Array(Array());
+        $link = linkToMyDb();
+        
+        $result = mysqli_query($link,"SELECT * FROM ucitele");
+        while($row = mysqli_fetchArray($result)){
+            array_push($seznamUcitelu, $row);
+        }
     }
     
     /**
@@ -138,7 +151,7 @@
         } 
         $ip = get_client_ip();
         $den = ($DEFAULTDATE - time())%14;
-        $resutl = mysqli_query("SELECT * FROM rozvrh WHERE den = $den and hodina = $hodina and ip like'$ip' and ucitel like'$ucitel' and jmeno like'$jmeno'");
+        $resutl = mysqli_query("SELECT * FROM rozvrh WHERE den = $den and hodina = $hodina and ip like'$ip' and ucitel like'$ucitel'");
         if(!($row = mysqli_fetch_array($resutl))){
             mysqli_query($link,"INSERT INTO rozvrh VALUES(0, $den, '$ip', '$ucitel', 1, '$jmeno', $hodina)");
         }else{
