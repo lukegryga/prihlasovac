@@ -29,7 +29,15 @@
                 <input type="text" placeholder="Počítač" class="inputvkarte" pattern="[0-9]{1,2}" title="Jen čísla s délkou 2 znaků." name="pocitac" required value="<?php echo getCisloPc(get_client_ip()) ?>" ><br>
                 <input type="text" class="inputvkarte" id="nadpis_input" value="Jméno" readonly="true">
                 <input type="text" class="inputvkarte" id="nadpis_input" value="Počítač" readonly="true"><br>
-                <input type="text" placeholder="Učitel" class="inputvkarte" pattern="[a-z]{1,12}" title="Jen malá písmena s maximální délkou 12 znaků a bez diakritiky." name="ucitel" required>
+                <select>
+                    <?php
+                    $seznamUcitelu = getSeznamUcitelu();
+                        while($row = mysqli_fetch_array($seznamUcitelu, MYSQL_ASSOC)){
+                            echo "<option value=\"$row[zkratka]\">$row[jmeno]</option>";
+                        }
+                    ?>
+                </select>
+                <!--<input type="text" placeholder="Učitel" class="inputvkarte" pattern="[a-z]{1,12}" title="Jen malá písmena s maximální délkou 12 znaků a bez diakritiky." name="ucitel" required>-->
                 <input type="text" placeholder="Hodina" value=<?php echo ($hodina) ?> class="inputvkarte" pattern="[0-9]{1}" title="Jen čísla s délkou 2 znaků." name="hodina" required><br>
                 <input type="text" class="inputvkarte" id="nadpis_input" value="Jméno" readonly="true"><br>
                 <input type="text" placeholder="Report" class="inputvkarte" name="report"><br>
