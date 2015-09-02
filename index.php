@@ -32,12 +32,12 @@
                 <select>
                     <?php
                     $seznamUcitelu = getSeznamUcitelu();
-                        while($row = mysqli_fetch_array($seznamUcitelu, MYSQL_ASSOC)){
-                            echo "<option value=\"$row[zkratka]\" "; 
-                            if(getUcitel() == $row[zkratka]){
-                                echo "selected";
+                        while($row = mysqli_fetch_array($seznamUcitelu, MYSQL_NUM)){
+                            echo "<option value=\"$row[0]\" "; 
+                            if(getUcitel() == $row[0]){
+                                echo " selected ";
                             }
-                            echo">$row[jmeno]</option>";
+                            echo">$row[1]</option>";
                         }
                     ?>
                 </select>
