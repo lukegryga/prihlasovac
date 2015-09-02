@@ -1,4 +1,5 @@
 <?php
+
     /**
      * 
      * @return string IP adresa klienta. Když neúspěch tak vrací prázdný řetězec
@@ -110,16 +111,13 @@
         return $pzaznam[5];
     }
     /**
-     * Vráti dvojrozměrné pole se senamemu učitelů. Index 0 = zkratka index 1 = Příjmení
+     * Vráti mysql_query s učilely (zkratka, přijmení)
      */
     function getSeznamUcitelu(){
         $seznamUcitelu = Array(Array());
         $link = linkToMyDb();
         
-        $result = mysqli_query($link,"SELECT * FROM ucitele");
-        while($row = mysqli_fetchArray($result)){
-            array_push($seznamUcitelu, $row);
-        }
+        return mysqli_query($link,"SELECT * FROM ucitele");  
     }
     
     /**
