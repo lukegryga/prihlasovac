@@ -73,7 +73,7 @@
         if(!$link){
             return "";
         }
-        $result = mysqli_query($link,"SELECT * FROM rozvrh WHERE ip like '$ip' and den=$den and hodina=$hodina");
+        $result = mysqli_query($link,"SELECT * FROM rozvrh WHERE ip like '$ip' and den=$den and hodina=$hodina" );
         $pzaznam = null;
         if(!($pzaznam = mysqli_fetch_array($result))){
                 return "";
@@ -154,7 +154,7 @@
         } 
         $ip = get_client_ip();
         $den = getDay();
-        $resutl = mysqli_query("SELECT * FROM rozvrh WHERE den = $den and hodina = $hodina and ip like'$ip' and ucitel like'$ucitel'");
+        $resutl = mysqli_query("SELECT * FROM rozvrh WHERE den = $den and hodina = $hodina and ip like'$ip' and ucitel like'$ucitel' and jmeno like'$jmeno'");
         if(!($row = mysqli_fetch_array($resutl))){
             mysqli_query($link,"INSERT INTO rozvrh VALUES(0, $den, '$ip', '$ucitel', 1, '$jmeno', $hodina)");
         }else{
@@ -176,8 +176,8 @@
      * @return int vrátí číslo 1-14 (den od 1.9.2015)
      */
     function getDay(){
-        $DEFAULTDATE = strtotime("2015-9-1");
-        return ($DEFAULTDATE - time())%14;
+        date_default_timezone_set("Europe/Prague");
+        return (time() / 86400) % 14;
         
     }
     
