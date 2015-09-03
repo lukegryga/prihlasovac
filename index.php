@@ -10,6 +10,10 @@
     </head>
     
     <body>
+        <div class="karta" id="stred">
+            <h1> SPŠE Přihlašovač</h1>
+        </div>
+        
         <?php 
             include("phpKnihovna.php");
             if(isset($_POST['prihlasit'])){
@@ -20,9 +24,7 @@
             }
             $hodina = getHodina();
         ?>
-        <div class="karta" id="stred">
-            <h1> SPŠE Přihlašovač</h1>
-        </div>
+        
         
         <div class="karta" id="stred">
             <form action="index.php" method="post">
@@ -32,7 +34,7 @@
                 <input type="text" placeholder="Počítač" class="inputvkarte" pattern="[0-9]{1,2}" title="Jen čísla s délkou 2 znaků." name="pocitac" required value="<?php echo getCisloPc(get_client_ip()) ?>" ><br>
                 <input type="text" class="inputvkarte" id="nadpis_input" value="Učitel" readonly="true">
                 <input type="text" class="inputvkarte" id="nadpis_input" value="Hodina" readonly="true"><br>
-                <select>
+                <select name="ucitel">
                     <?php
                     $seznamUcitelu = getSeznamUcitelu();
                         while($row = mysqli_fetch_array($seznamUcitelu, MYSQL_NUM)){
