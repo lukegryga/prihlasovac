@@ -153,7 +153,7 @@
         } 
         $ip = get_client_ip();
         $den = getDay();
-        $resutl = mysqli_query("SELECT * FROM rozvrh WHERE den = $den and hodina = $hodina and ip like'$ip' and ucitel like'$ucitel' and jmeno like'$jmeno'");
+        $resutl = mysqli_query($link,"SELECT * FROM rozvrh WHERE den = $den and hodina = $hodina and ip like'$ip' and ucitel like'$ucitel' and jmeno like'$jmeno'");
         if(!($row = mysqli_fetch_array($resutl))){
             mysqli_query($link,"INSERT INTO rozvrh VALUES(0, $den, '$ip', '$ucitel', 1, '$jmeno', $hodina)");
         }else{
@@ -185,7 +185,11 @@
         //inicializace proměnných
         $jmeno = filter_input(INPUT_POST,"jmeno");
         $pocitac = filter_input(INPUT_POST,"pocitac");
-        $ucitel = substr(filter_input(INPUT_POST,"ucitel"),0,3);
+        $pocitac = (String)$pocitac;
+        if(strlen($pocitac) < 2){
+            $pocitac = "0".$pocitac;
+        }
+        $ucitel = filter_input(INPUT_POST,"ucitel");
         $hodina = filter_input(INPUT_POST,"hodina");
         $report = filter_input(INPUT_POST,"report");
         
