@@ -176,6 +176,8 @@ body{
 
 #nadpis_input{
     color: #777777;
+    width: 20em;
+    border: solid red 10px;
     margin: 0;
     margin-top: 3em;
     padding: 0;
