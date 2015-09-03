@@ -25,7 +25,7 @@
             <form action="index.php" method="post">
                 <input type="text" class="inputvkarte" id="nadpis_input" value="Jméno" readonly="true">
                 <input type="text" class="inputvkarte" id="nadpis_input" value="Počítač" readonly="true"><br>
-                <input type="text" autofocus placeholder="Jméno" class="inputvkarte" pattern="[a-zěščřžýáíéóďťúů]{1,12}" title="Jen malá písmena s maximální délkou 12 znaků." name="jmeno" required>
+                <input type="text" autofocus placeholder="Jméno" class="inputvkarte" pattern="[a-zěščřžýáíéóďťúů]{1,12}" title="Jen malá písmena s maximální délkou 12 znaků." value=<?php echo"\""; echo getJmeno(); echo"\""; ?> name="jmeno" required>
                 <input type="text" placeholder="Počítač" class="inputvkarte" pattern="[0-9]{1,2}" title="Jen čísla s délkou 2 znaků." name="pocitac" required value="<?php echo getCisloPc(get_client_ip()) ?>" ><br>
                 <input type="text" class="inputvkarte" id="nadpis_input" value="Jméno" readonly="true">
                 <input type="text" class="inputvkarte" id="nadpis_input" value="Počítač" readonly="true"><br>
