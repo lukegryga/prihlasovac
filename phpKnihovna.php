@@ -135,7 +135,7 @@
             return;
         }
         $ip = get_client_ip();
-        mysqli_query($link,"DELETE FROM ippc WHERE ip = $ip");
+        mysqli_query($link,"DELETE FROM ippc WHERE ip like '$ip'");
         mysqli_query($link,"INSERT INTO ippc VALUES ('$ip', $pc)");
     }
     
