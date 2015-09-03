@@ -10,17 +10,17 @@
     </head>
     
     <body>
-        <div class="karta" id="stred">
-            <h1> SPŠE Přihlašovač</h1>
-        </div>
+       
         
         <?php 
             include("phpKnihovna.php");
             if(isset($_POST['prihlasit'])){
                 $errorMessage = vsechno_funkce();
-                echo "<div class=\"karta\" id=\"stred\">";    
-                echo "<a id=\"error\"> $errorMessage</a>"; 
-                echo "</div>";
+                if($errorMessage != ""){
+                    echo "<div class=\"karta\" id=\"stred\">";    
+                    echo "<a id=\"error\"> $errorMessage</a>"; 
+                    echo "</div>";
+                }
             }
             $hodina = getHodina();
         ?>
