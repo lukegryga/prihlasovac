@@ -23,20 +23,25 @@ body{
 }
 
 select{
-    width:200px;
+    width:170px;
     background-color: #F7F7F7;
     border: none;
     border-bottom: 1px solid #a6a6a6;
     text-align: center;
     padding:0.65em 0em;
+    margin: 10px;
+    margin-top: 0;
 }
 
-select:focus {
+select:focus, .inputvkarte:focus{
     outline: none;
+    border-bottom: 2px solid #7b7b7b;
 }
 
-select:hover{
-    border-bottom: 2px solid #7b7b7b;
+
+
+option{
+    background-color: #F7F7F7;
 }
 
 .inphledat{
@@ -188,6 +193,7 @@ select:hover{
     padding-top: 0;
     margin: 10px;
     margin-top: 0;
+    box-shadow: #EEEEEE 0px 4px 20px;
 }
 
 .inputvkarte:focus {
@@ -201,6 +207,7 @@ select:hover{
     right: 10px;
     border: 0 solid black;
     font-size: 0.7em;
+    box-shadow: #f7f7f7 2px 4px 20px;
 }
 
 .submitvkarte{
@@ -217,9 +224,6 @@ select:hover{
     box-shadow: #D2D2D2 3px 7px 3px;
 }
 
-.submitvkarte:focus{
-    outline: none;
-}
 
 #backbutton{
     background-color: #AAAAAA;
