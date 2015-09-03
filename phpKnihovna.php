@@ -1,5 +1,4 @@
 <?php
-
     /**
      * 
      * @return string IP adresa klienta. Když neúspěch tak vrací prázdný řetězec
@@ -34,7 +33,7 @@
         $hodiny = array(752,842,937,1032,1137,1227,1317,1407);
         $hodina=0;
         for($i=7;$i>=0;$i--){
-            if($intCas>($hodiny[$i]-10)){
+            if($intCas>($hodiny[$i]-18)){
                 $hodina = $i+1;
                 break;
             }
@@ -195,7 +194,7 @@
         $slozka = "";
         foreach($soubory as $s){
             //if(strpos($s,"q".date("md")) !== false && strpos($s,"h".$hodina) !== false){
-            if(strpos($s,"q0617") !== false && strpos($s,"h".$hodina) !== false){
+            if(strpos($s,"q".date("m").date("d")) !== false && strpos($s,"h".$hodina) !== false){
                 $slozka=$s; 
                 break;
             }
