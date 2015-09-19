@@ -4,7 +4,6 @@
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="style.css" type="text/css">
-        <meta charset="UTF-8">
         <link href="whale.png" rel="icon" type="image/png" />
         <title>SPŠE FTP Přihlašovač</title>
     </head>
