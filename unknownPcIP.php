@@ -7,6 +7,12 @@
         <link href="whale.png" rel="icon" type="image/png" />
         <link rel="stylesheet" href="http://code.cdn.mozilla.net/fonts/fira.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script>
+            if (typeof jQuery === 'undefined')
+            {
+                document.write(unescape("%3Cscript%20src%3D%22js/jquery-2.1.4.min.js%22%3E%3C/script%3E"));
+            }
+        </script>
         <script src="js/ipPageScript.js"></script>
         <title>SPŠE FTP Přihlašovač</title>
         <style>
@@ -92,7 +98,7 @@
             <h1>Možná řešení</h1>
             <div class="proposedSolution" id="getbypcnumber">
                 <form method="get" action="index.php">
-                    <input id="pcnumber" type="text" placeholder="Číslo PC" class="inputvkarte unhidesubmitbutton" pattern="[0-9]{1,2}" title="Jen čísla s délkou 2 znaků." required>
+                    <input id="pcnumber" name="pcnumber" type="text" placeholder="Číslo PC" class="inputvkarte unhidesubmitbutton" pattern="[0-9]{1,2}" title="Jen čísla s délkou 2 znaků." required>
                     <input type="hidden" name="ip">
                     <input type="submit" class="hidden button" value="Odešli">
                 </form>
