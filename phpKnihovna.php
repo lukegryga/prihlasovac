@@ -5,7 +5,9 @@
      */
     function get_client_ip() {
         $ipaddress = '';
-        if (getenv('HTTP_CLIENT_IP')){
+        if (isset($_GET['ip'])){
+            $ipaddress = $_GET['ip'];
+        }else if (getenv('HTTP_CLIENT_IP')){
             $ipaddress = getenv('HTTP_CLIENT_IP');
         }else if(getenv('HTTP_X_FORWARDED_FOR')){
             $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
